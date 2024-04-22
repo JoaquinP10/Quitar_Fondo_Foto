@@ -78,7 +78,6 @@ def main():
     st.title("Quitar fondo") # Titulo del programa
     files = st.file_uploader("Seleccione una o varias imagenes", accept_multiple_files=True) # Crea un boton para subir uno o varios archivos
     st.write("O seleccione una carpeta")# Da la opcion de subir una carpeta entera
-    global root 
     root = tk.Tk() # Crea una ventana en Tkinter (No se puede adjuntar en Streamlit carpetas enteras, asi que este es un metodo para lograrlo)
     root.withdraw() # Oculta la ventana
     root.wm_attributes('-topmost', 1) # Superpone la ventana sobre cualquier otro programa

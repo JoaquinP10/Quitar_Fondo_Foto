@@ -1,4 +1,5 @@
 # Version 1.2. Desarrollado por Daniel Campana y Joaquín Pozo
+# Version 1.3. Desarrollado por Natalia Escudero y Angela
 # Innovaciones: Soporte para subir múltiples archivos o carpetas, descarga individual o en archivo comprimido (.zip)
 
 # -------------------------------------------------- Importacion de librerias --------------------------------------------------
@@ -48,10 +49,14 @@ def img_remover(files, set, dirname): # Funcion que quita el fondo de las imagen
             img = Image.open(path) # Se abren los archivos
             names.append(file.split(".")[0] + '.png')  # Se incluye en nombre del archivo
         img2 = remove(img, bgcolor=(255,255,255,255)) # Remueve el fondo de la imagen
-        images.append(img2) # Se adiciona la imagen creada a la lista de imagenes 
-        st.image(img2) # Muestra la imagen en la interfaz
+
+    # Redimensionado de fotos
+        img3 = img2.resize((240, 288))
+
+        images.append(img3) # Se adiciona la imagen creada a la lista de imagenes 
+        st.image(img3) # Muestra la imagen en la interfaz
         buf = BytesIO() # Objeto que permite almacenar el contenido de las imagenes
-        img2.save(buf, format='png') # Guardar las imagenes en formato .png
+        img3.save(buf, format='png') # Guardar las imagenes en formato .png
 
     if len(files) == 1:
         st.download_button("Descargar", data=buf, file_name=names[0], mime="image/png") # Si la imagen solo es una se descarga directamente

@@ -1,5 +1,5 @@
 # Version 1.2. Desarrollado por Daniel Campana y Joaquín Pozo
-# Version 1.3. Desarrollado por Natalia Escudero y Angela
+# Version 1.3. Desarrollado por Natalia Escudero
 # Innovaciones: Soporte para subir múltiples archivos o carpetas, descarga individual o en archivo comprimido (.zip)
 
 # -------------------------------------------------- Importacion de librerias --------------------------------------------------

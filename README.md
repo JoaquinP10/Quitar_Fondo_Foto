@@ -57,8 +57,4 @@ streamlit run main.py</code></pre>
     <li>Natalia Escudero</li>
     <li>Angela Anhuamán</li>
   </ul>
-  
-  <h2 id="licencia">Licencia</h2>
-  <p>Este proyecto está bajo la Licencia MIT. Consulta el archivo <code>LICENSE</code> para más detalles.</p>
-</body>
-</html>
+

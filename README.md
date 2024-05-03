@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>README</title>
+  <App para el tratamiento de fotografías>
 </head>
 <body>
   <h1>Proyecto de Eliminación de Fondo de Imágenes</h1>

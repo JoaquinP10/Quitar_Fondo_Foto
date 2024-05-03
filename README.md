@@ -5,20 +5,30 @@
 </head>
 <body>
   <h1>Proyecto de Eliminación de Fondo de Imágenes</h1>
-  <p>Este proyecto es una aplicación web que permite eliminar el fondo de imágenes de forma sencilla y rápida.</p>
+  <p>Aplicación web desarrollada en Streamlit</p>
   
   <h2>Contenido</h2>
   <ul>
     <li><a href="#acerca-del-proyecto">Acerca del Proyecto</a></li>
+    <li><a href="#características">Características</a></li>
     <li><a href="#instalación">Instalación</a></li>
     <li><a href="#cómo-usar">Cómo Usar</a></li>
     <li><a href="#contribuir">Contribuir</a></li>
-    <li><a href="#autores">Autores</a></li>
-    <li><a href="#licencia">Licencia</a></li>
+    <li><a href="#colaboradores">Colaboradores</a></li>
   </ul>
   
   <h2 id="acerca-del-proyecto">Acerca del Proyecto</h2>
-  <p>La aplicación web de eliminación de fondo de imágenes es una herramienta desarrollada con Streamlit, Python y otras tecnologías. Su objetivo principal es proporcionar una forma fácil y eficiente de eliminar el fondo de las imágenes.</p>
+  <p>Este proyecto consiste en una aplicación web desarrollada con Streamlit que permite quitar el fondo de una imagen y redimensionarla según las especificaciones de SUNEDU (Superintendencia Nacional de Educación Universitaria). La herramienta facilita a los usuarios la eliminación del fondo de una foto de manera rápida y sencilla, así como también la posibilidad de subir una carpeta o varios archivos de imágenes a la aplicación para procesarlos en lotes. Además, los usuarios podrán descargarlas con el fondo eliminado y redimensionado, ya sea de forma individual o en un archivo comprimido (.zip) en caso de haber subido múltiples imágenes..</p>
+  
+  <h2 id="características">Características</h2>
+  <ul>
+    <li>Soporte para cargar una o varias imágenes a la vez.</li>
+    <li>Posibilidad de cargar una carpeta completa.</li>
+    <li>Eliminación del fondo de las imágenes cargadas.</li>
+    <li>Redimensionamiento de las imágenes resultantes.</li>
+    <li>Descarga individual de las imágenes resultantes.</li>
+    <li>Descarga de un archivo ZIP con todas las imágenes resultantes cuando se cargan varias imágenes.</li>
+  </ul>
   
   <h2 id="instalación">Instalación</h2>
   <p>Para instalar y ejecutar la aplicación de eliminación de fondo de imágenes en tu máquina local, sigue estos pasos:</p>
@@ -45,7 +55,7 @@ streamlit run main.py</code></pre>
     <li>Daniel Campana</li>
     <li>Joaquín Pozo</li>
     <li>Natalia Escudero</li>
-    <li>Angela</li>
+    <li>Angela Anhuamán</li>
   </ul>
   
   <h2 id="licencia">Licencia</h2>

@@ -1,5 +1,5 @@
 # Version 1.2. Desarrollado por Daniel Campana y Joaquín Pozo
-# Version 1.3. Desarrollado por Natalia Escudero
+# Version 1.3. Desarrollado por Natalia Escudero y Angela Anhuamán
 # Innovaciones: Soporte para subir múltiples archivos o carpetas, descarga individual o en archivo comprimido (.zip)
 
 # -------------------------------------------------- Importacion de librerias --------------------------------------------------
@@ -14,6 +14,11 @@ from tkinter import filedialog
 import os
 
 # -------------------------------------------------- Codigo Principal --------------------------------------------------
+# Función para mostrar la ayuda abriendo un correo electrónico
+def mostrar_ayuda():
+    correos = "alberto.torreblanca@pucp.edu.pe, fernando.moreno@pucp.edu.pe"
+    st.write("Para obtener ayuda, envía un correo electrónico a los siguientes destinatarios:")
+    st.write(correos)
 
 # Creacion de archivo .zip
 
@@ -33,9 +38,31 @@ def create_zip_file(images, zip_filename, names): # Funcion que crea un archivo 
     with open(zip_filename, 'wb') as f: # Se crea y abre el archivo .zip final en modo escritura binaria
         f.write(zip_buffer.getvalue())  # Ingresa los datos almacenados en el .zip creado anteriormente y lo guarda con el nombre elegido
 
+# Funcion para redimensionar imagenes
+def resize_image(img, target_width=244, target_height=288):
+    width, height = img.size
+    original_aspect_ratio = width / height
+    target_aspect_ratio = target_width / target_height
+
+    if original_aspect_ratio > target_aspect_ratio:
+        # La imagen es más ancha que alta
+        new_width = int(target_height * original_aspect_ratio)
+        resized_img = img.resize((new_width, target_height), Image.BICUBIC)
+        x_offset = (new_width - target_width) // 2
+        resized_img = resized_img.crop((x_offset, 0, x_offset + target_width, target_height))
+    else:
+        # La imagen es más alta que ancha
+        new_height = int(target_width / original_aspect_ratio)
+        resized_img = img.resize((target_width, new_height), Image.BICUBIC)
+        y_offset = (new_height - target_height) // 2
+        resized_img = resized_img.crop((0, y_offset, target_width, y_offset + target_height))
+
+    return resized_img, target_width, target_height
+
+
 # Cargar imagenes y remover fondos
 
-def img_remover(files, set, dirname): # Funcion que quita el fondo de las imagenes y las guarda en formato .png
+def img_remover(files, set, dirname, dpi=300): # Funcion que quita el fondo de las imagenes y las guarda en formato .png
     # Parametros: files (Archivo o archivos subidos), set (1 si es para archivos, 0 si es para carpetas)
     names = [] # Lista que contendra los nombres de los archivos
     images = [] # Lista que almacenara las imagenes editadas
@@ -50,9 +77,25 @@ def img_remover(files, set, dirname): # Funcion que quita el fondo de las imagen
             names.append(file.split(".")[0] + '.png')  # Se incluye en nombre del archivo
         img2 = remove(img, bgcolor=(255,255,255,255)) # Remueve el fondo de la imagen
 
-    # Redimensionado de fotos
-        img3 = img2.resize((240, 288))
+    # Ajustando el tamaño simétricamente con las dimensiones específicas
+       # Desempaquetar los valores devueltos por resize_image
+        resized_img, new_width, new_height = resize_image(img2, target_width=244, target_height=288)
 
+        # Reemplazar img3 con la imagen redimensionada
+        img3 = resized_img
+    # Tamaño del archivo
+
+        quality = 95
+        max_size_kb = 50 * 1024  #Resolucion de 50kB
+
+        while True:
+            img_bytes = BytesIO()
+            img3.save(img_bytes, format='PNG', quality=quality, dpi=(dpi, dpi))
+            size_kb = len(img_bytes.getvalue()) / 1024
+            if size_kb <= max_size_kb or quality <= 0:
+                break
+            quality -= 5
+            
         images.append(img3) # Se adiciona la imagen creada a la lista de imagenes 
         st.image(img3) # Muestra la imagen en la interfaz
         buf = BytesIO() # Objeto que permite almacenar el contenido de las imagenes
@@ -87,6 +130,9 @@ def main():
     elif boton_carpeta:
         dirname = str(filedialog.askdirectory(master=root)) # Obtener la ruta de la carpeta subida
         img_remover(os.listdir(dirname), '0', dirname) # Abrir la carpeta y ejecutar las funcion segun los parametros necesarios
+    
+    # Botón de ayuda
+    mostrar_ayuda()
 
-if __name__ == "__main__":
+if _name_ == "_main_":
     main()

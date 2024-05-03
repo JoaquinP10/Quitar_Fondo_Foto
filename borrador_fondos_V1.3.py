@@ -134,5 +134,5 @@ def main():
     # Botón de ayuda
     mostrar_ayuda()
 
-if __name__ == "_main_":
+if __name__ == "__main__":
     main()

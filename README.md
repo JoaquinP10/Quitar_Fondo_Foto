@@ -57,4 +57,3 @@ streamlit run main.py</code></pre>
     <li>Natalia Escudero</li>
     <li>Angela Anhuamán</li>
   </ul>
-

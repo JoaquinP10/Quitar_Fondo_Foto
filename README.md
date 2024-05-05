@@ -31,11 +31,33 @@
   </ul>
   
   <h2 id="instalación">Instalación</h2>
-  <p>Para instalar y ejecutar la aplicación de eliminación de fondo de imágenes en tu máquina local, sigue estos pasos:</p>
-  <pre><code>pip install streamlit
-git clone https://github.com/tu_usuario/proyecto-eliminacion-fondo-imagenes.git
+
+<h3>Ejecución con Docker</h3>
+
+<ol>
+  <li>Asegúrate de tener Docker instalado en tu máquina. Puedes descargar e instalar Docker Desktop desde <a href="https://www.docker.com/products/docker-desktop">el sitio web oficial de Docker</a>.</li>
+  
+  <li>Clona este repositorio en tu máquina:</li>
+  
+  <pre><code>git clone https://github.com/tu_usuario/proyecto-eliminacion-fondo-imagenes.git
 cd proyecto-eliminacion-fondo-imagenes
-streamlit run main.py</code></pre>
+  </code></pre>
+  
+  <li>Construye la imagen de Docker ejecutando el siguiente comando en la raíz del proyecto:</li>
+  
+  <pre><code>docker build -t eliminacion-fondo-imagenes .
+  </code></pre>
+  
+  <p>Este comando construirá una imagen de Docker llamada <code>eliminacion-fondo-imagenes</code> que contiene la aplicación.</p>
+  
+  <li>Ejecuta el contenedor Docker con el siguiente comando:</li>
+  
+  <pre><code>docker run -p 8501:8501 eliminacion-fondo-imagenes
+  </code></pre>
+  
+  <p>Esto iniciará el contenedor Docker y la aplicación estará disponible en tu navegador web en la dirección <code>http://localhost:8501</code>.</p>
+</ol>
+
   
   <h2 id="cómo-usar">Cómo Usar</h2>
   <p>Después de ejecutar la aplicación, simplemente carga una imagen desde tu dispositivo o selecciona una carpeta que contenga imágenes. La aplicación eliminará automáticamente el fondo de las imágenes cargadas y te permitirá descargar el resultado.</p>

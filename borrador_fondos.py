@@ -60,11 +60,30 @@ def img_remover(files, set, dirname, dpi): # Funcion que quita el fondo de las i
     # Parametros: files (Archivo o archivos subidos), set (1 si es para archivos, 0 si es para carpetas)
     names = [] # Lista que contendra los nombres de los archivos
     images = [] # Lista que almacenara las imagenes editadas
+    total_files = [] #Lista en set == '1' la cual almacenará todas las imágenes
 
     if set == '0':
-        files = [file for file in os.listdir(dirname) if (file.endswith('.png') or file.endswith('.jpg') or file.endswith('.jpeg') or file.endswith('.tif') or file.endswith('.webp'))] # Selecciona solo los documentos que contengan el formato de imagen aceptado
-
-    for file in files: # Se ejecuta archivo por archivo
+        total_files = [file for file in os.listdir(dirname) if (file.endswith('.png') or file.endswith('.jpg') or file.endswith('.jpeg') or file.endswith('.tif') or file.endswith('.webp') or file.endswith('.jfif'))] # Selecciona solo los documentos que contengan el formato de imagen aceptado
+    else: # set == '1'
+        for file in files: # Primero se recorre por toda la lista para encontrar archivos .zip
+            if file.name.endswith('.zip'): # Si se encuentra
+                with zipfile.ZipFile(file) as z:
+                    # Se obtiene la lista de nombres
+                    file_names = z.namelist()
+                    # Se filtran solo los archivos deseados
+                    for file_name in file_names:
+                        if file_name.endswith(('.png', '.jpg', '.jpeg', '.jfif')):
+                            with z.open(file_name) as img_file:
+                                img_bytes = BytesIO(img_file.read()) # Se guarda el archivo
+                                img_bytes.name = file_name  # Agregamos nombre del archivo
+                                total_files.append(img_bytes) # Se guarda el archivo en la lista
+            else:
+                # Los archivos de imagen simplemente se guardan 
+                img_bytes = BytesIO(file.read())
+                img_bytes.name = file.name  # Agregar el nombre del archivo como atributo
+                total_files.append(img_bytes)
+          
+    for file in total_files: # Se ejecuta archivo por archivo
         if set == '1':
             img = Image.open(file) # Si se sube un archivo o archivos, se abre solo con el nombre del archivo
             names.append(file.name.split(".")[0] + '.png') # Se incluye en nombre del archivo
@@ -98,7 +117,7 @@ def img_remover(files, set, dirname, dpi): # Funcion que quita el fondo de las i
         buf = BytesIO() # Objeto que permite almacenar el contenido de las imagenes
         img3.save(buf, format='png') # Guardar las imagenes en formato .png
 
-    if len(files) == 1:
+    if len(total_files) == 1:
         st.download_button("Descargar", data=buf, file_name=names[0], mime="image/png") # Si la imagen solo es una se descarga directamente
     else: # Si es mas de una imagen se descarga en un archivo .zip
         # Parte ZIP
@@ -115,7 +134,7 @@ def img_remover(files, set, dirname, dpi): # Funcion que quita el fondo de las i
 def main():
     try:
         st.title("Quitar fondo") # Titulo del programa
-        files = st.file_uploader("Seleccione una o varias imagenes", accept_multiple_files=True, type=["png","jpg","jpeg", "tif", "webp"]) # Crea un boton para subir uno o varios archivos
+        files = st.file_uploader("Seleccione una o varias imagenes", accept_multiple_files=True, type=["png","jpg","jpeg", "tif", "webp", "jfif", "zip"]) # Crea un boton para subir uno o varios archivos
         st.write("O seleccione una carpeta")# Da la opcion de subir una carpeta entera
         root = tk.Tk() # Crea una ventana en Tkinter (No se puede adjuntar en Streamlit carpetas enteras, asi que este es un metodo para lograrlo)
         root.withdraw() # Oculta la ventana
